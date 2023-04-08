@@ -29,16 +29,26 @@
 .calculatorDisplay{
     background-color: darkgrey;
     width: 80%;
-    height: 80px;
+    height: 100px;
     border: 1px solid black;
     border-radius: 10px;
-    font-size: 50px;
     color: white;
-    line-height: 80px;
     text-align: right;
     padding-right: 20px;
     margin: auto;
-    margin-top: 40px;
+    margin-top: 20px;
+}
+.displayOutput{
+    font-size: 20px;
+    height: 30px;
+    width: 100%;
+    padding-top: 10px;
+}
+.displayCurrent{
+    font-size: 50px;
+    height: 70px;
+    width: 100%;
+    padding-top: 5px;
 }
 .buttonDisplay{
     background-color: #afa187;
@@ -48,6 +58,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 5px;
+    border-radius: 0 0 10px 10px;
 }
 .buttonDisplay .span2{
     grid-row: span 2;
