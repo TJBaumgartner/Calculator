@@ -20,6 +20,7 @@ function setNumber(number){
     }
     if(operatorActive == true){
         displayCurrent.textContent = number;
+        currentNumber += number;
         operatorActive = false;
         return;
     }
@@ -46,6 +47,25 @@ function setOperator(operation){
     canUseDecimal = true;
 }
 
+function clearEntry (){
+    currentNumber = '';
+    displayCurrent.textContent = '';
+    canUseDecimal = true;
+}
+
+function allClear (){
+    currentNumber = '';
+    perviousNumber = '';
+    currentOperation = null;
+    displayCurrent.textContent = '';
+    canUseDecimal = true;
+    displayOutput.textContent = '';
+}
+
+function equalsOperation (){
+
+}
+
 numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
         setNumber(button.textContent);
@@ -57,3 +77,7 @@ operatorButtons.forEach((button) => {
         setOperator(button.textContent);
     });
 });
+
+clearEntryButton.addEventListener('click', clearEntry);
+allClearButton.addEventListener('click', allClear);
+equalsButton.addEventListener('click', equalsOperation);
