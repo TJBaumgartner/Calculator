@@ -9,6 +9,8 @@ let perviousNumber = '';
 let currentNumber = '';
 let currentOperation = null;
 let operatorActive = false;
+canUseDecimal = true;
+
 
 
 
@@ -21,8 +23,18 @@ function setNumber(number){
         operatorActive = false;
         return;
     }
+    if(number == '.'){
+        if(canUseDecimal == true){
+            displayCurrent.textContent += number;
+            currentNumber += number;
+            canUseDecimal = false;
+            return;
+        }
+        return;
+    }
     displayCurrent.textContent += number;
     currentNumber += number;
+    console.log(currentNumber);
 }
 
 function setOperator(operation){
@@ -31,6 +43,7 @@ function setOperator(operation){
     perviousNumber = currentNumber;
     currentNumber = '';
     operatorActive = true;
+    canUseDecimal = true;
 }
 
 numberButtons.forEach((button) => {
