@@ -10,8 +10,8 @@ let currentNumber = '';
 let currentOperation = null;
 let operatorActive = false;
 let totalOutput = 0;
-canUseDecimal = true;
-
+let canUseDecimal = true;
+let equalsUsed = false;
 
 function setNumber(number){
     if(displayCurrent.textContent == 0){
@@ -37,13 +37,23 @@ function setNumber(number){
 }
 
 function setOperator(operation){
+    if(operatorActive == true){
+        displayOutput.textContent = displayCurrent.textContent + '' + operation;
+        currentOperation = operation;
+        return;
+    }
     if(currentNumber == ''){
         currentNumber = perviousNumber;
     }
     makeCalculation(currentOperation);
+    
     displayOutput.textContent += displayCurrent.textContent + '' + operation;
     if(currentOperation != null){
         displayCurrent.textContent = totalOutput;
+    }
+    if(equalsUsed == true){
+        displayOutput.textContent = totalOutput + operation;
+        equalsUsed = false;
     }
     currentOperation = operation;
     perviousNumber = currentNumber;
@@ -55,6 +65,9 @@ function setOperator(operation){
 function makeCalculation(operator){
     perviousNumber = parseInt(perviousNumber);
     currentNumber = parseInt(currentNumber);
+    if(totalOutput > 0){
+        perviousNumber = totalOutput;
+    }
     if(operator == '+'){
         additionOperation(perviousNumber, currentNumber);
     }
@@ -62,9 +75,6 @@ function makeCalculation(operator){
         subtractionOperation(perviousNumber, currentNumber);
     }
     if(operator == '*'){
-        if(totalOutput > 0){
-           perviousNumber = totalOutput; 
-        }
         multiplicationOperation([perviousNumber, currentNumber]);
     }
     if(operator == '÷'){
@@ -76,16 +86,10 @@ function makeCalculation(operator){
 }
 
 function additionOperation(a, b){
-    if(totalOutput > 0){
-        a = totalOutput
-    }
     totalOutput = a + b;
     return a + b;
 }
 function subtractionOperation(a, b){
-    if(totalOutput > 0){
-        a = totalOutput
-    }
     totalOutput = a - b;
     return a - b;
 }
@@ -94,8 +98,16 @@ function multiplicationOperation(array){
     totalOutput = answer;
     return answer;
 }
-
-
+function divisionOperation(a, b){
+    totalOutput = a/b;
+    return a/b;
+}
+function percentageOperation(a, b){
+    b = b*0.01;
+    c = b * a;
+    totalOutput = c;
+    return c;
+}
 
 
 
@@ -118,7 +130,12 @@ function allClear (){
 }
 
 function equalsOperation (){
-
+    makeCalculation(currentOperation);
+    displayOutput.textContent += displayCurrent.textContent + '' + '=';
+    displayCurrent.textContent = totalOutput;
+    currentOperation = null;
+    canUseDecimal = true;
+    equalsUsed = true;
 }
 
 numberButtons.forEach((button) => {
