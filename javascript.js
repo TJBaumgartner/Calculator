@@ -53,6 +53,8 @@ function setOperator(operation){
 }
 
 function makeCalculation(operator){
+    perviousNumber = parseInt(perviousNumber);
+    currentNumber = parseInt(currentNumber);
     if(operator == '+'){
         additionOperation(perviousNumber, currentNumber);
     }
@@ -60,7 +62,10 @@ function makeCalculation(operator){
         subtractionOperation(perviousNumber, currentNumber);
     }
     if(operator == '*'){
-        multiplicationOperation(perviousNumber, currentNumber);
+        if(totalOutput > 0){
+           perviousNumber = totalOutput; 
+        }
+        multiplicationOperation([perviousNumber, currentNumber]);
     }
     if(operator == '÷'){
         divisionOperation(perviousNumber, currentNumber);
@@ -71,24 +76,23 @@ function makeCalculation(operator){
 }
 
 function additionOperation(a, b){
-    let intA = parseInt(a);
-    let intB = parseInt(b);
     if(totalOutput > 0){
-        intA = totalOutput;
+        a = totalOutput
     }
-    totalOutput = intA + intB;
-    console.log(totalOutput);
-    return intA + intB;
+    totalOutput = a + b;
+    return a + b;
 }
 function subtractionOperation(a, b){
-    let intA = parseInt(a);
-    let intB = parseInt(b);
     if(totalOutput > 0){
-        intA = totalOutput;
+        a = totalOutput
     }
-    totalOutput = intA - intB;
-    console.log(totalOutput);
-    return intA - intB;
+    totalOutput = a - b;
+    return a - b;
+}
+function multiplicationOperation(array){
+    let answer = array.reduce((total, current) => total * current, 1);
+    totalOutput = answer;
+    return answer;
 }
 
 
