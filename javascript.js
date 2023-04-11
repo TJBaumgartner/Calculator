@@ -60,6 +60,9 @@ function setOperator(operation){
     currentNumber = '';
     operatorActive = true;
     canUseDecimal = true;
+    if(totalOutput > 99999999999){
+        scientificConverter(totalOutput);
+    }
 }
 
 function makeCalculation(operator){
@@ -90,6 +93,10 @@ function additionOperation(a, b){
     return a + b;
 }
 function subtractionOperation(a, b){
+    if(totalOutput == 0){
+        currentNumber = currentNumber*-1;
+        displayOutput.textContent = currentNumber;
+    }
     totalOutput = a - b;
     return a - b;
 }
@@ -127,16 +134,35 @@ function allClear (){
     canUseDecimal = true;
     displayOutput.textContent = '';
     totalOutput = 0;
+    operatorActive = false;
+    equalsUsed = false;
 }
 
 function equalsOperation (){
-    makeCalculation(currentOperation);
-    displayOutput.textContent += displayCurrent.textContent + '' + '=';
-    displayCurrent.textContent = totalOutput;
-    currentOperation = null;
-    canUseDecimal = true;
-    equalsUsed = true;
+    if(currentOperation != null){
+        makeCalculation(currentOperation);
+        displayOutput.textContent += displayCurrent.textContent + '' + '=';  
+        displayCurrent.textContent = totalOutput;
+        currentOperation = null;
+        canUseDecimal = true;
+        equalsUsed = true;
+        if(totalOutput > 99999999999 || totalOutput < -99999999999){
+            scientificConverter(totalOutput);
+        } 
+    }
+    
 }
+
+function scientificConverter (number){
+    let numberToString = number.toString();
+    let exponent = number.toString().length - 11;
+    let newNumber = numberToString.slice(0,1) + '.' + numberToString.slice(1,3) + 'E' + exponent;
+    displayCurrent.textContent = newNumber;
+}
+
+
+
+
 
 numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
